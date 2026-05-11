@@ -4,38 +4,48 @@ using UnityEngine; // for MonoBehaviour
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float turnSpeed = 20f;  // Angle (in radians) character turns per sec
-    
-    Animator m_Animator;
-    Rigidbody m_Rigidbody;
-    AudioSource m_AudioSource;
-    Vector3 m_Movement;  // Default value = (0, 0, 0)
-    Quaternion m_Rotation = Quaternion.identity;  // Default value = no rotation
+    /* ==== MOVEMENT SETTINGS ==== */
+    public float turnSpeed = 20f;  // Rotation speed for turning player
 
-    // Start is called before the first frame update automatically
+    /* ==== COMPONENT REFERENCES ==== */
+    Animator m_Animator;  // Controls animations
+    Rigidbody m_Rigidbody; // Controls physics movement
+    AudioSource m_AudioSource; // Controls walking sound effects
+
+    /* ==== MOVEMENT VARIABLES ==== */
+    Vector3 m_Movement;  // Stores movement direction
+    Quaternion m_Rotation = Quaternion.identity;  // Stores player rotation
+
+    /* ==== INITIALIZATION: Called automatically when game starts ==== */
     void Start()
     {
-        m_Animator = GetComponent<Animator>();
-        m_Rigidbody = GetComponent<Rigidbody>();
-        m_AudioSource = GetComponent<AudioSource>();
+        m_Animator = GetComponent<Animator>(); // Get Animator component attached to player
+        m_Rigidbody = GetComponent<Rigidbody>(); // Get Rigidbody component
+        m_AudioSource = GetComponent<AudioSource>(); // Get AudioSource component
     }
 
-    // Update is called once per frame
-    void FixedUpdate()  // Called 50 times per sec
+    /* ==== PLAYER INPUT: Called at fixed intervals. Used for physics movement ==== */
+    void FixedUpdate()  
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxis("Horizontal"); // Get left/right keyboard input
+        float vertical = Input.GetAxis("Vertical"); // Get forward/backward keyboard input
+
+        /* ==== MOVEMENT VECTOR ==== */
+        m_Movement.Set(horizontal, 0f, vertical); // Create movement direction vector
+        m_Movement.Normalize(); // Normalize movement: Prevents diagonal movement from becoming faster
         
-        m_Movement.Set(horizontal, 0f, vertical);
-        m_Movement.Normalize();
+        /* ==== INPUT CHECKING ==== */
+        bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f); // Check if player is pressing horizontal keys
+        bool hasVerticalInput = !Mathf.Approximately(vertical, 0f); // Check if player is pressing vertical keys
+        bool isWalking = hasHorizontalInput || hasVerticalInput; // Player walking if either input exists
         
-        // 3. Identify whether there is player Input
-        bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
-        bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
-        bool isWalking = hasHorizontalInput || hasVerticalInput;
-        m_Animator.SetBool("IsWalking", isWalking);
+        /* ==== ANIMATION ==== */
+        m_Animator.SetBool("IsWalking", isWalking);  // Update Animator walking state
+
+        /* ==== FOOTSTEP AUDIO ==== */
         if(isWalking)
         {
+            // Only play walking sound if not already playing
             if(!m_AudioSource.isPlaying)
             {
                 m_AudioSource.Play();
@@ -43,24 +53,28 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            m_AudioSource.Stop();
+            m_AudioSource.Stop(); // Stop walking audio when player stops
         }
 
-        // 4. For the character to face its direction movement
+        /* ==== PLAYER ROTATION ==== */
         Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
-        m_Rotation = Quaternion.LookRotation(desiredForward);
+        m_Rotation = Quaternion.LookRotation(desiredForward); // Smoothly rotate player toward movement direction
     }
 
+    /* ==== APPLY MOVEMENT: Called by Animator after animation updates ==== */
     void OnAnimatorMove()
     {
-        // 5. Apply movement and rotation to the character
-        m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
-        m_Rigidbody.MoveRotation(m_Rotation);
+        m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude); // Move player using Rigidbody
+        m_Rigidbody.MoveRotation(m_Rotation); // Apply player rotation
     }
 }
 
-// 1. Input Manager - create variables for x and y axes
-// 2. Normalize the Input
-// 3. Identify whether there is player Input
-// 4. For the character to face its direction movement (& rotation)
-// 5. Apply movement and rotation to the character
+/* ==== MOVEMENT SYSTEM OVERVIEW ==== */
+// 1. Get player keyboard input
+// 2. Create movement direction vector
+// 3. Normalize movement speed
+// 4. Detect if player is walking
+// 5. Trigger walking animation
+// 6. Play/stop footstep audio
+// 7. Rotate player toward movement direction
+// 8. Apply movement and rotation using Rigidbody
