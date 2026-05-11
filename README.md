@@ -1,88 +1,162 @@
-# John Lemon's Haunted Jaunt (Unity 3D Game)
+# John Lemon's Haunted Jaunt
 
-**John Lemon's Haunted Jaunt** is a beginner-friendly 3D stealth game developed in Unity. Players guide John Lemon through a haunted mansion filled with eerie rooms, creepy corridors, and patrolling ghost enemies. The goal is to escape detection and reach the exit.
+A 3D stealth-survival game developed in Unity where players navigate a haunted mansion while avoiding enemy detection and escaping safely. This project focuses on gameplay systems, AI navigation, stealth mechanics, animation systems, and environmental atmosphere design using Unity and C#.
 
----
-
-## Features
-
-- Ghost patrol AI using Unity animation and navigation
-- Gargoyle AI using Unity animation
-- Player controller with idle/walk animations
-- Multiple haunted environments: Bathroom, Bedroom, Dining Room, Corridor, etc.
-- Character animation with `.fbx` 3D assets
-- Real-time lighting and VFX for atmospheric storytelling
-- Complete Main Scene with multiple connected rooms
+Originally created through Unity Learn and coursework exploration, the project was later revisited and expanded with detailed developer notes and code documentation for educational and portfolio purposes.
 
 ---
 
-## 📁 Project Structure
+## Project Overview
+
+Players control John Lemon as he explores interconnected haunted environments filled with roaming ghost enemies, environmental storytelling, dynamic lighting, and stealth-based gameplay mechanics. The objective is to avoid detection, survive enemy encounters, and successfully escape the mansion.
+
+---
+
+## Key Features
+
+- 3D player movement and animation system
+- Enemy AI patrol behavior using Unity NavMesh
+- Stealth detection system using raycasting and trigger zones
+- Game-over and restart state management
+- Dynamic lighting and environmental atmosphere
+- Outline shader effects and visual feedback systems
+- Audio integration for immersion and gameplay feedback
+- Multiple explorable interior environments
+
+---
+
+## Technologies & Tools
+
+- Unity Engine
+- C#
+- Unity NavMesh System
+- Unity Animator Controller
+- Unity Physics & Raycasting
+- TextMesh Pro
+- Visual Studio
+
+---
+
+## Gameplay Systems Implemented
+
+### Player Controller System
+- Rigidbody-based movement
+- Smooth player rotation
+- Animation-driven locomotion
+- Footstep audio integration
+
+### Enemy AI System
+- Waypoint-based patrol behavior
+- NavMesh pathfinding
+- Trigger-based awareness system
+- Line-of-sight player detection
+
+### Stealth & Detection
+- Enemy vision cone simulation
+- Raycast visibility checks
+- Dynamic fail-state/game-over logic
+
+### Visual Effects
+- Dynamic light flickering system
+- Outline shader rendering
+- Material and emission manipulation
+
+### Game State Management
+- Scene restart logic
+- Win/lose state handling
+- UI fade transitions
+- Audio event triggers
+
+---
+
+## Software Engineering Concepts Demonstrated
+
+- Object-Oriented Programming (OOP)
+- Component-based architecture
+- AI pathfinding systems
+- Event-driven programming
+- State management
+- Physics and collision systems
+- Raycasting and spatial calculations
+- Animation systems
+- Modular gameplay scripting
+- Shader/material manipulation
+- Custom Unity editor tooling
+
+---
+
+## Project Structure
+
+```text
 Assets/
-├── Animation/ # Animation clips and controllers
-├── Audio/ # Game sound effects and background audio
-├── Character_Cactus/ # Character models and supporting data
-├── Materials/ # Game materials for lighting and surfaces
-├── Models/ # FBX models for characters and objects
-├── Prefabs/ # Prebuilt game objects
-├── Scenes/ # MainScene.unity and related data
-├── Scripts/ # C# logic for AI, controls, game systems
-├── Shaders/ # Visual shaders for rendering
-├── Textures/ # Texture files used in environments
-├── TextMesh Pro/ # UI text rendering
-├── TutorialInfo/ # Unity Learn metadata and tutorial links
-
+├── Animation/        # Animation clips and controllers
+├── Audio/            # Sound effects and environmental audio
+├── Materials/        # Materials and lighting assets
+├── Models/           # 3D models and FBX assets
+├── Prefabs/          # Reusable game objects
+├── Scenes/           # Main gameplay scenes
+├── Scripts/          # Gameplay and AI logic
+├── Shaders/          # Rendering and outline shaders
+├── Textures/         # Environment textures
+├── TextMesh Pro/     # UI text rendering assets
+```
 
 ---
 
-## Getting Started
+## Script Location
 
-### Requirements:
-- Unity 2020.3 or later
-- TextMesh Pro (auto-imported)
-- No external packages required
+All gameplay and logic scripts are located under:
 
-### How to Run:
-1. Open Unity Hub and load the project folder.
-2. Open `Assets/Scenes/MainScene.unity`.
-3. Press Play to start the game.
-4. Use arrow keys or WASD to control John Lemon.
-5. Avoid ghosts and reach the final room without getting caught!
+```text
+Assets/Scripts/
+```
 
----
+Example scripts include:
 
-## Learning Objectives
-
-- Understand Unity's Animator Controller system
-- Set up 3D character movement and camera following
-- Create patrolling enemy AI using basic scripting
-- Practice modular scene design and VFX integration
-- Learn Unity’s project structure and best practices
+- `PlayerMovement.cs`
+- `WaypointPatrol.cs`
+- `Observer.cs`
+- `GameEnding.cs`
+- `LightFlicker.cs`
+- `Outliner.cs`
 
 ---
 
-## Scripts Included
+## Educational Developer Notes
 
-- `Move.cs` – Basic movement logic
-- `CameraFollow.cs` – Smooth camera following player
-- `Patrol.cs` – Enemy patrol behavior
-- `Push.cs`, `Jump.cs`, `AutoRotate.cs` – Interactions and motion
-- `Ghost.controller`, `JohnLemon.controller` – Animation logic
+This repository contains heavily documented scripts and beginner-friendly developer notes for educational and portfolio purposes.
+
+Comments were intentionally expanded to:
+- explain gameplay architecture
+- reinforce Unity concepts
+- document programming logic
+- improve readability and maintainability
+- support long-term learning and review
+
+Because of this, the scripts are more heavily commented than a typical production codebase.
 
 ---
 
-## Screenshots
-> *(Optional section – Add screenshots from your gameplay later)*
+## Project Purpose
+
+This project was developed to strengthen practical understanding of:
+- Unity gameplay architecture
+- AI navigation systems
+- stealth game mechanics
+- animation and physics systems
+- event-driven gameplay logic
+- modular software design
+
+It also serves as a portfolio project demonstrating transferable software engineering and game development concepts.
 
 ---
 
 ## Author
 
-Created by **Sheila Demonteverde** as part of MAC 272 coursework and Unity Learn tutorials.
+Created by Sheila Demonteverde through Unity Learn and coursework exploration. Expanded and documented for educational and portfolio development purposes.
 
 ---
 
 ## License
 
-This project is shared for educational purposes only. Not for commercial use.
-
-
+This project is shared for educational and portfolio purposes only. Not intended for commercial distribution.
