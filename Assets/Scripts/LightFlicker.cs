@@ -11,7 +11,8 @@ using UnityEditor;
 public class LightFlicker : MonoBehaviour
 {
     /* ==== FLICKER MODES ==== */
-    public enum FlickerMode // Enum lets you choose flicker behavior
+    // Enum lets you choose flicker behavior
+    public enum FlickerMode 
     {
         Random, // Random flickering intensity
         AnimationCurve  // Controlled flicker using animation curve
@@ -51,15 +52,17 @@ public class LightFlicker : MonoBehaviour
     void Update()
     {
         m_Timer += Time.deltaTime; // Increase timer over time
-
-        if (flickerMode == FlickerMode.Random) // RANDOM FLICKER MODE
+        // RANDOM FLICKER MODE
+        if (flickerMode == FlickerMode.Random) 
         {
-            if (m_Timer >= flickerDuration) // Change intensity after timer duration
+            // Change intensity after timer duration
+            if (m_Timer >= flickerDuration) 
             {
                 ChangeRandomFlickerLightIntensity ();
             }
         }
-        else if(flickerMode == FlickerMode.AnimationCurve)  // ANIMATION CURVE MODE
+        // ANIMATION CURVE MODE
+        else if(flickerMode == FlickerMode.AnimationCurve)  
         {
             ChangeAnimatedFlickerLightIntensity (); // Use animation curve for flicker
         }
@@ -81,7 +84,8 @@ public class LightFlicker : MonoBehaviour
     {
         m_FlickerLightIntensity = intensityCurve.Evaluate (m_Timer); // Evaluate brightness from animation curve
 
-        if (m_Timer >= intensityCurve[intensityCurve.length - 1].time) // Restart curve when reaching end
+        // Restart curve when reaching end
+        if (m_Timer >= intensityCurve[intensityCurve.length - 1].time) 
             m_Timer = intensityCurve[0].time;
     }
 }
@@ -138,9 +142,9 @@ public class LightFlickerEditor : Editor
             EditorGUILayout.PropertyField (m_LightIntensityMinProp);
             EditorGUILayout.PropertyField (m_LightIntensityMaxProp);
             EditorGUILayout.PropertyField (m_FlickerDurationProp);
-
         }
-        else if (m_FlickerModeProp.enumValueIndex == 1) // ANIMATION CURVE SETTINGS
+        // ANIMATION CURVE SETTINGS
+        else if (m_FlickerModeProp.enumValueIndex == 1) 
         {
             EditorGUILayout.PropertyField (m_IntensityCurveProp);
         }
