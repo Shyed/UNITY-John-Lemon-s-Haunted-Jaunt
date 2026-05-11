@@ -21,29 +21,31 @@ public class GameEnding : MonoBehaviour
     float m_Timer; // Timer used for fade effect
     bool m_HasAudioPlayed; // Prevents audio from playing repeatedly
 
-    /* ==== EXIT DETECTION ==== */
-    void OnTriggerEnter(Collider other) // Called when another object enters trigger
+    /* ==== EXIT DETECTION: Called when another object enters trigger ==== */
+    void OnTriggerEnter(Collider other) 
     {
-        if(other.gameObject == player) // Check if trigger object is player
+        // Check if trigger object is player
+        if(other.gameObject == player) 
         {
             m_IsPlayerAtExit = true; // Player reached exit
         }
     }
 
-     /* ==== PLAYER CAUGHT ==== */
-    public void CaughtPlayer()     // Called by enemy system when player is caught
+     /* ==== PLAYER CAUGHT: Called by enemy system when player is caught ==== */
+    public void CaughtPlayer()   
     {
         m_IsPlayerCaught = true; // Trigger lose state
     }
 
-     /* ==== UPDATE LOOP ==== */
-    void Update() // Called every frame
+     /* ==== UPDATE LOOP: Called every frame ==== */
+    void Update() 
     {
-        if(m_IsPlayerAtExit)  // If player escaped
+        // If player escaped
+        if(m_IsPlayerAtExit)  
         {
             EndLevel(exitBackgroundImageCanvasGroup, false, exitAudio); // Run win ending
-        }
-        else if(m_IsPlayerCaught) // If player got caught
+        } // If player got caught
+        else if(m_IsPlayerCaught) 
         {
             EndLevel(caughtBackgroundImageCanvasGroup, true, caughtAudio); // Run lose ending
         }
@@ -52,21 +54,24 @@ public class GameEnding : MonoBehaviour
      /* ==== END LEVEL LOGIC Handles: fade effect, ending audio, restarting/quitting ==== */
     void EndLevel(CanvasGroup imageCanvasGroup, bool doRestart, AudioSource audioSource)  // Fade the Canvas Group and quit the game
     {
-        if(!m_HasAudioPlayed) // Play audio only once
+        // Play audio only once
+        if(!m_HasAudioPlayed) 
         {
             audioSource.Play(); // Play ending sound
             m_HasAudioPlayed = false;   // would allow repeated audio playback.
         }
         m_Timer += Time.deltaTime;  // Increase timer over time
         imageCanvasGroup.alpha = m_Timer / fadeDuration; // Fade UI image in gradually
-        
-        if(m_Timer > fadeDuration + displayImageDuration) // After fade + display duration
+
+        // After fade + display duration
+        if(m_Timer > fadeDuration + displayImageDuration) 
         {
-            if(doRestart) // Restart level if player lost
+            // Restart level if player lost
+            if(doRestart) 
             {
                 SceneManager.LoadScene(0); // Reload first scene
-            }
-            else // Otherwise quit game
+            } // Otherwise quit game
+            else 
             {
                 Application.Quit(); // Close application
             }
